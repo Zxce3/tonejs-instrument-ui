@@ -42,30 +42,10 @@
       return;
     }
     if (c === 'Space') { e.preventDefault(); engine.unlock(); engine.setSustain(true); return; }
-    if (e.repeat && !['Minus', 'Equal', 'Comma', 'Period', 'KeyB', 'KeyN'].includes(c)) return;
-    const digit = c.match(/^Digit(\d)$/);
-    if (digit) { const i = ((+digit[1] + 9) % 10) + (e.shiftKey ? 10 : 0); if (INSTRUMENTS[i]) engine.select(INSTRUMENTS[i].id); return; }
     switch (c) {
-      case 'KeyZ': engine.shiftOctave(-1); break;
-      case 'KeyX': engine.shiftOctave(1); break;
-      case 'KeyC': engine.setVelocity(engine.velocity - 0.1); break;
-      case 'KeyV': engine.setVelocity(engine.velocity + 0.1); break;
-      case 'ArrowUp': case 'BracketLeft': e.preventDefault(); engine.step(-1); break;
-      case 'ArrowDown': case 'BracketRight': e.preventDefault(); engine.step(1); break;
-      case 'Minus': engine.setVolume(Math.max(-40, engine.volume - 2)); break;
-      case 'Equal': engine.setVolume(Math.min(6, engine.volume + 2)); break;
-      case 'KeyM': engine.toggleMute(); break;
-      case 'Comma': engine.setReverb(Math.max(0, engine.reverb - 0.05)); break;
-      case 'Period': engine.setReverb(Math.min(1, engine.reverb + 0.05)); break;
-      case 'KeyB': engine.setRelease(Math.max(0.05, engine.release - 0.1)); break;
-      case 'KeyN': engine.setRelease(Math.min(4, engine.release + 0.1)); break;
-      case 'KeyI': engine.toggleLite(); break;
-      case 'Backspace': case 'Delete': e.preventDefault(); engine.resetEffects(); break;
-      case 'Slash':
-        e.preventDefault();
-        if (e.shiftKey) help = !help;
-        else document.getElementById('search')?.focus();
-        break;
+      case 'ArrowLeft': e.preventDefault(); engine.shiftOctave(-1); break;
+      case 'ArrowRight': e.preventDefault(); engine.shiftOctave(1); break;
+      case 'F1': e.preventDefault(); help = !help; break;
       case 'Escape': engine.allOff(); down.clear(); help = false; break;
     }
   }

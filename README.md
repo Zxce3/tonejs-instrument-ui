@@ -10,6 +10,5 @@ npm run build          # static site in ./build (adapter-static)
 npm run gen:instruments # re-scan the upstream repo → src/lib/data/manifest.json
 ```
 
-Keyboard: `A S D F …` / `W E T Y …` play notes, `Z/X` octave, `C/V` velocity, `Space` sustain,
-`↑/↓` or `[ ]` switch instrument, `1–0` / `⇧1–⇧0` jump to instrument 1–20, `−/=` volume, `,/.` reverb,
-`B/N` release, `⌫` reset effects, `I` lite samples, `M` mute, `/` search, `?` help.
+Keyboard: the whole keyboard plays notes in two piano rows (lower `Z S X D C V G B H N J M , L . ; /`,
+upper `Q 2 W 3 E R 5 T 6 Y 7 U I 9 O 0 P [ = ]`, one octave higher). `←/→` octave, `Space` sustain, `Esc` release all, `F1` help.

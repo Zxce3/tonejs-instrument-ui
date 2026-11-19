@@ -10,10 +10,6 @@
       items: INSTRUMENTS.filter((i) => i.family === f && (!q || i.label.toLowerCase().includes(q) || f.toLowerCase().includes(q)))
     })).filter((g) => g.items.length)
   );
-  const num = (id: string) => {
-    const i = INSTRUMENTS.findIndex((x) => x.id === id);
-    return i < 10 ? String((i + 1) % 10) : i < 20 ? `⇧${(i - 9) % 10}` : '';
-  };
 </script>
 
 <nav aria-label="Instruments" class="flex min-h-0 flex-col gap-3">
@@ -23,10 +19,9 @@
       id="search"
       bind:value={query}
       placeholder="Search instruments"
-      class="w-full rounded-xl border border-line bg-panel px-3 py-2 pr-9 text-sm placeholder:text-zinc-500"
+      class="w-full rounded-xl border border-line bg-panel px-3 py-2 pr-3 text-sm placeholder:text-zinc-500"
       onkeydown={(e) => e.key === 'Escape' && ((e.currentTarget as HTMLInputElement).blur(), (query = ''))}
     />
-    <kbd class="absolute right-2 top-1/2 -translate-y-1/2">/</kbd>
   </label>
 
   <div class="scroll-thin flex min-h-0 gap-4 overflow-x-auto pb-1 lg:flex-col lg:overflow-y-auto lg:overflow-x-hidden lg:pr-1">
@@ -44,7 +39,6 @@
           >
             <span class="size-2 shrink-0 rounded-full" style="background:{sel ? '#000' : ACCENT[i.family]}"></span>
             <span class="flex-1 font-medium">{i.label}</span>
-            {#if num(i.id)}<kbd class="hidden whitespace-nowrap lg:inline {sel ? '!border-black/30 !bg-black/10 !text-black' : ''}">{num(i.id)}</kbd>{/if}
           </button>
         {/each}
       </section>

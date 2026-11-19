@@ -9,16 +9,21 @@ export const noteToMidi = (n: string) => {
 export const isBlack = (m: number) => [1, 3, 6, 8, 10].includes(m % 12);
 export const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
-/** Computer-keyboard → semitone offset from the current base C. Uses KeyboardEvent.code so it works on any layout. */
-export const KEY_OFFSETS: Record<string, number> = {
-  KeyA: 0, KeyW: 1, KeyS: 2, KeyE: 3, KeyD: 4, KeyF: 5, KeyT: 6, KeyG: 7,
-  KeyY: 8, KeyH: 9, KeyU: 10, KeyJ: 11, KeyK: 12, KeyO: 13, KeyL: 14,
-  KeyP: 15, Semicolon: 16, Quote: 17
-};
-export const KEY_LABELS: Record<string, string> = {
-  KeyA: 'A', KeyW: 'W', KeyS: 'S', KeyE: 'E', KeyD: 'D', KeyF: 'F', KeyT: 'T', KeyG: 'G',
-  KeyY: 'Y', KeyH: 'H', KeyU: 'U', KeyJ: 'J', KeyK: 'K', KeyO: 'O', KeyL: 'L',
-  KeyP: 'P', Semicolon: ';', Quote: "'"
-};
+/**
+ * Tracker-style layout on KeyboardEvent.code (works on any layout), two piano rows:
+ *   lower: Z S X D C V G B H N J M , L . ; /   → base + 0 …
+ *   upper: Q 2 W 3 E R 5 T 6 Y 7 U I 9 O 0 P [ = ] → base + 12 …
+ */
+const LOWER = ['KeyZ', 'KeyS', 'KeyX', 'KeyD', 'KeyC', 'KeyV', 'KeyG', 'KeyB', 'KeyH', 'KeyN', 'KeyJ', 'KeyM', 'Comma', 'KeyL', 'Period', 'Semicolon', 'Slash'];
+const UPPER = ['KeyQ', 'Digit2', 'KeyW', 'Digit3', 'KeyE', 'KeyR', 'Digit5', 'KeyT', 'Digit6', 'KeyY', 'Digit7', 'KeyU', 'KeyI', 'Digit9', 'KeyO', 'Digit0', 'KeyP', 'BracketLeft', 'Equal', 'BracketRight'];
+const LABEL: Record<string, string> = { Comma: ',', Period: '.', Semicolon: ';', Slash: '/', BracketLeft: '[', BracketRight: ']', Equal: '=' };
+const label = (c: string) => LABEL[c] ?? c.replace(/^(Key|Digit)/, '');
+
+export const KEY_OFFSETS: Record<string, number> = {};
+LOWER.forEach((c, i) => (KEY_OFFSETS[c] = i));
+UPPER.forEach((c, i) => (KEY_OFFSETS[c] = 12 + i));
+
+/** What to print on a piano key for each offset (upper row wins where the rows overlap). */
 export const OFFSET_LABEL: string[] = [];
-for (const [code, off] of Object.entries(KEY_OFFSETS)) OFFSET_LABEL[off] = KEY_LABELS[code];
+LOWER.forEach((c, i) => (OFFSET_LABEL[i] = label(c)));
+UPPER.forEach((c, i) => (OFFSET_LABEL[12 + i] = label(c)));

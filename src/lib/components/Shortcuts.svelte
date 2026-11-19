@@ -3,25 +3,14 @@
   let dlg: HTMLDialogElement | undefined = $state();
   $effect(() => { if (!dlg) return; open && !dlg.open ? dlg.showModal() : !open && dlg.open && dlg.close(); });
 
+  const upper = ['Q', '2', 'W', '3', 'E', 'R', '5', 'T', '6', 'Y', '7', 'U', 'I', '9', 'O', '0', 'P', '[', '=', ']'];
+  const lower = ['Z', 'S', 'X', 'D', 'C', 'V', 'G', 'B', 'H', 'N', 'J', 'M', ',', 'L', '.', ';', '/'];
+  const black = new Set(['S', 'D', 'G', 'H', 'J', 'L', '2', '3', '5', '6', '7', '9', '0', '=']);
   const rows: [string[], string][] = [
-    [['A', 'S', 'D', 'F', '…'], 'Play white keys (home row)'],
-    [['W', 'E', 'T', 'Y', 'U', '…'], 'Play black keys (row above)'],
-    [['Z', 'X'], 'Octave down / up'],
-    [['C', 'V'], 'Velocity down / up'],
+    [['←', '→'], 'Octave down / up'],
     [['Space'], 'Hold sustain pedal'],
-    [['↑', '↓'], 'Previous / next instrument'],
-    [['[', ']'], 'Previous / next instrument'],
-    [['1', '…', '0'], 'Jump to instrument 1–10'],
-    [['⇧', '1', '…', '0'], 'Jump to instrument 11–20'],
-    [['−', '='], 'Volume down / up'],
-    [[',', '.'], 'Reverb down / up'],
-    [['B', 'N'], 'Release down / up'],
-    [['⌫'], 'Reset effects'],
-    [['I'], 'Toggle lite samples'],
-    [['M'], 'Mute'],
-    [['/'], 'Search instruments'],
     [['Esc'], 'Release all notes'],
-    [['?'], 'Toggle this help']
+    [['F1'], 'Toggle this help']
   ];
 </script>
 
@@ -35,6 +24,14 @@
     <div class="mb-3 flex items-center justify-between">
       <h2 class="text-lg font-semibold">Keyboard shortcuts</h2>
       <button onclick={() => (open = false)} class="rounded-lg px-2 text-zinc-400 hover:text-white" aria-label="Close">✕</button>
+    </div>
+    <p class="mb-3 text-sm text-zinc-400">Every letter, number and punctuation key plays a note — two piano rows. The lower row starts at the highlighted C; the upper row is one octave higher.</p>
+    <div class="mb-4 space-y-1.5 overflow-x-auto font-mono">
+      {#each [['Upper row', upper], ['Lower row', lower]] as [name, keys]}
+        <div class="flex items-center gap-1" aria-label={name as string}>
+          {#each keys as k}<kbd class="min-w-6 text-center {black.has(k) ? '!bg-black !text-zinc-300' : '!bg-zinc-200 !text-zinc-800'}">{k}</kbd>{/each}
+        </div>
+      {/each}
     </div>
     <ul class="divide-y divide-line">
       {#each rows as [keys, desc]}
