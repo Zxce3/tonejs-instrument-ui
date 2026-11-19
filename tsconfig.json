@@ -1,0 +1,6 @@
+{
+  "extends": "$app/tsconfig",
+  "compilerOptions": { "resolveJsonModule": true, "types": ["node", "$app/types"], "paths": { "$lib": ["./src/lib"], "$lib/*": ["./src/lib/*"] } },
+  "include": ["src", "*.ts", "*.js"],
+  "exclude": ["src/service-worker"]
+}
