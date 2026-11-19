@@ -12,7 +12,7 @@
   );
   const num = (id: string) => {
     const i = INSTRUMENTS.findIndex((x) => x.id === id);
-    return i < 10 ? String((i + 1) % 10) : '';
+    return i < 10 ? String((i + 1) % 10) : i < 20 ? `⇧${(i - 9) % 10}` : '';
   };
 </script>
 
@@ -44,7 +44,7 @@
           >
             <span class="size-2 shrink-0 rounded-full" style="background:{sel ? '#000' : ACCENT[i.family]}"></span>
             <span class="flex-1 font-medium">{i.label}</span>
-            {#if num(i.id)}<kbd class="hidden lg:inline {sel ? '!border-black/30 !bg-black/10 !text-black' : ''}">{num(i.id)}</kbd>{/if}
+            {#if num(i.id)}<kbd class="hidden whitespace-nowrap lg:inline {sel ? '!border-black/30 !bg-black/10 !text-black' : ''}">{num(i.id)}</kbd>{/if}
           </button>
         {/each}
       </section>

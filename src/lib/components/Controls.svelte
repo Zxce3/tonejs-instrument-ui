@@ -18,9 +18,9 @@
   </div>
 
   <div class="space-y-1.5">
-    {@render field('Reverb', `${Math.round(engine.reverb * 100)}%`, 'R')}
+    {@render field('Reverb', `${Math.round(engine.reverb * 100)}%`, ', / .')}
     <input type="range" min="0" max="1" step="0.01" value={engine.reverb} oninput={(e) => engine.setReverb(+e.currentTarget.value)} class="w-full" aria-label="Reverb" />
-    {@render field('Release', `${engine.release.toFixed(2)} s`)}
+    {@render field('Release', `${engine.release.toFixed(2)} s`, 'B / N')}
     <input type="range" min="0.05" max="4" step="0.05" value={engine.release} oninput={(e) => engine.setRelease(+e.currentTarget.value)} class="w-full" aria-label="Release" />
   </div>
 
@@ -43,9 +43,9 @@
       onpointerup={() => engine.setSustain(false)}
       onpointerleave={() => engine.sustain && engine.setSustain(false)}
     >Hold to sustain</button>
-    <button class="{btn} w-full" onclick={() => engine.resetEffects()}>Reset volume, reverb, release &amp; velocity</button>
+    <button class="{btn} w-full" onclick={() => engine.resetEffects()}>Reset effects <kbd>⌫</kbd></button>
     <label class="flex cursor-pointer items-center justify-between gap-3 text-xs text-zinc-400">
-      <span>Lite samples <span class="text-zinc-500">(half the download)</span></span>
+      <span>Lite samples <kbd>I</kbd> <span class="text-zinc-500">(half the download)</span></span>
       <input type="checkbox" checked={engine.lite} onchange={() => engine.toggleLite()} class="size-4" style="accent-color:var(--accent)" />
     </label>
   </div>

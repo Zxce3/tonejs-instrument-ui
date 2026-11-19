@@ -11,4 +11,5 @@ npm run gen:instruments # re-scan the upstream repo → src/lib/data/manifest.js
 ```
 
 Keyboard: `A S D F …` / `W E T Y …` play notes, `Z/X` octave, `C/V` velocity, `Space` sustain,
-`↑/↓` or `[ ]` switch instrument, `1–0` jump, `−/=` volume, `R` reverb, `M` mute, `/` search, `?` help.
+`↑/↓` or `[ ]` switch instrument, `1–0` / `⇧1–⇧0` jump to instrument 1–20, `−/=` volume, `,/.` reverb,
+`B/N` release, `⌫` reset effects, `I` lite samples, `M` mute, `/` search, `?` help.
